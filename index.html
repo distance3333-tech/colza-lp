@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cafe &amp; Bar COLZA</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+JP:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#111111;
+  --bg2:#181818;
+  --gold:#c9a96a;
+  --gold-light:#e8d5ab;
+  --txt:#eeeeee;
+  --gray:#9a9a9a;
+}
+*{ -webkit-tap-highlight-color:transparent; }
+html{ scroll-behavior:smooth; }
+body{
+  background:var(--bg);
+  color:var(--txt);
+  font-family:'Noto Serif JP', serif;
+  font-weight:300;
+  letter-spacing:.06em;
+  overflow-x:hidden;
+}
+h1,h2,h3,.serif-en{ font-family:'Cormorant Garamond','Noto Serif JP',serif; }
+
+/* ===== Opening (logo appears first, page fades in around it) ===== */
+@keyframes logoIn{
+  0%{ opacity:0; transform:scale(.9); filter:blur(8px); }
+  70%{ opacity:1; }
+  100%{ opacity:1; transform:scale(1); filter:blur(0); }
+}
+.hero-inner .brand-logo{ opacity:0; animation:logoIn 3.5s ease forwards .4s; }
+/* everything except the logo starts hidden, then slowly fades in */
+body.intro{ overflow:hidden; }
+.reveal{ transition:opacity 2.2s ease; }
+body.intro .reveal{ opacity:0!important; }
+/* brand logo (image if logo.png exists, SVG recreation otherwise) */
+.brand-logo{ text-align:center; }
+.brand-logo img{ max-width:min(70vw,420px); height:auto; filter:drop-shadow(0 0 24px rgba(232,213,171,.25)); }
+.brand-logo svg{ width:min(70vw,380px); height:auto; filter:drop-shadow(0 0 24px rgba(232,213,171,.25)); }
+
+/* ===== Nav ===== */
+.top-nav{
+  background:rgba(17,17,17,.85);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid rgba(201,169,106,.25);
+}
+.top-nav ul{
+  display:flex; justify-content:center; align-items:center;
+  list-style:none; margin:0; padding:.9rem .4rem;
+}
+.nav-link{ display:block; color:var(--txt)!important; font-size:.8rem; letter-spacing:.22em; padding:.2rem 0; margin:0 1.1rem; position:relative; text-decoration:none; }
+.nav-link::after{
+  content:''; position:absolute; left:50%; bottom:0; width:0; height:1px;
+  background:var(--gold); transition:all .35s; transform:translateX(-50%);
+}
+.nav-link:hover::after{ width:80%; }
+@media (max-width:576px){
+  .nav-link{ font-size:.62rem; letter-spacing:.12em; margin:0 .45rem; }
+}
+
+/* ===== Hero ===== */
+#hero{
+  min-height:100vh;
+  display:flex; align-items:center; justify-content:center;
+  position:relative;
+  background:
+    radial-gradient(ellipse at 50% 110%, rgba(201,169,106,.18), transparent 60%),
+    linear-gradient(180deg,#0c0c0c 0%, #161310 60%, #111 100%);
+}
+.hero-visual{
+  position:absolute; inset:0; overflow:hidden; opacity:.5;
+}
+/* abstract bar-counter scene drawn in CSS */
+.counter-line{
+  position:absolute; left:0; right:0; bottom:24%;
+  height:1px; background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  box-shadow:0 0 18px rgba(201,169,106,.6);
+}
+.glass{
+  position:absolute; bottom:24%; width:26px; height:60px;
+  border:1px solid rgba(201,169,106,.55); border-top:none;
+  border-radius:0 0 8px 8px;
+  background:linear-gradient(180deg, transparent 40%, rgba(201,169,106,.18));
+}
+.glass::before{
+  content:''; position:absolute; left:50%; top:100%; width:2px; height:22px;
+  background:rgba(201,169,106,.5); transform:translateX(-50%);
+}
+.glass::after{
+  content:''; position:absolute; left:50%; top:calc(100% + 22px); width:20px; height:2px;
+  background:rgba(201,169,106,.5); transform:translateX(-50%);
+}
+.lamp{
+  position:absolute; top:0; width:1px; height:18%;
+  background:rgba(201,169,106,.4);
+}
+.lamp::after{
+  content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%);
+  width:90px; height:160px;
+  background:radial-gradient(ellipse at top, rgba(232,213,171,.22), transparent 70%);
+  clip-path:polygon(38% 0, 62% 0, 100% 100%, 0 100%);
+}
+.hero-inner{ position:relative; text-align:center; z-index:2; padding:0 1rem; }
+.hero-inner .brand-logo svg{ width:min(82vw,400px); }
+.hero-inner .brand-logo img{ max-width:min(82vw,440px); }
+.hero-inner .lead-txt{ margin-top:38px; font-size:.92rem; line-height:2.4; color:#cfcfcf; }
+.scroll-cue{
+  position:absolute; bottom:28px; left:50%; transform:translateX(-50%);
+  color:var(--gold); font-size:.65rem; letter-spacing:.4em; text-align:center; z-index:2;
+}
+.scroll-cue span{
+  display:block; width:1px; height:46px; margin:10px auto 0;
+  background:var(--gold); animation:cue 1.8s ease infinite;
+  transform-origin:top;
+}
+@keyframes cue{ 0%{transform:scaleY(0)} 50%{transform:scaleY(1)} 100%{transform:scaleY(0); opacity:0} }
+
+/* ===== Sections ===== */
+section{ padding:96px 0; }
+.sec-title{ text-align:center; margin-bottom:56px; }
+.sec-title h2{ color:var(--gold-light); letter-spacing:.35em; text-indent:.35em; font-size:1.9rem; }
+.sec-title small{ display:block; color:var(--gray); letter-spacing:.3em; font-size:.72rem; margin-top:8px; }
+.sec-title::after{
+  content:''; display:block; width:54px; height:1px; margin:20px auto 0;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.fade{ opacity:0; transform:translateY(34px); transition:opacity 1s ease, transform 1s ease; }
+.fade.show{ opacity:1; transform:none; }
+
+/* concept */
+#concept{ background:var(--bg2); }
+#concept p{ line-height:2.6; color:#d6d6d6; font-size:.95rem; }
+
+/* system */
+.sys-card{
+  background:#161616; border:1px solid rgba(201,169,106,.3);
+  padding:38px 26px; height:100%; text-align:center;
+  transition:transform .4s, box-shadow .4s, border-color .4s;
+}
+.sys-card:hover{ transform:translateY(-6px); border-color:var(--gold); box-shadow:0 14px 40px rgba(0,0,0,.5); }
+.sys-card .en{ font-family:'Cormorant Garamond',serif; color:var(--gold); letter-spacing:.25em; font-size:.8rem; }
+.sys-card h3{ font-size:1.15rem; color:var(--gold-light); margin:10px 0 4px; letter-spacing:.2em; }
+.sys-card .price{ font-size:2rem; color:var(--txt); font-family:'Cormorant Garamond',serif; margin:16px 0 4px; }
+.sys-card .price small{ font-size:.85rem; color:var(--gray); }
+.sys-card p{ color:var(--gray); font-size:.82rem; line-height:2; margin:0; }
+.sys-table{ color:var(--txt); }
+.sys-table td,.sys-table th{
+  background:transparent; color:#ddd; border-color:rgba(201,169,106,.25);
+  padding:.9rem 1rem; font-size:.88rem;
+}
+.sys-table td:last-child{ text-align:right; color:var(--gold-light); font-family:'Cormorant Garamond',serif; font-size:1rem; }
+.note{ color:var(--gray); font-size:.74rem; letter-spacing:.1em; }
+
+/* cast (no faces — silhouette-free monogram cards) */
+.cast-card{
+  background:#161616; border:1px solid rgba(201,169,106,.25);
+  text-align:center; padding:0 0 26px; overflow:hidden;
+  transition:transform .4s, border-color .4s;
+  height:100%; display:flex; flex-direction:column;
+}
+.cast-card p{ flex:1; }
+.cast-card:hover{ transform:translateY(-6px); border-color:var(--gold); }
+.cast-visual{
+  aspect-ratio:3/4; overflow:hidden;
+  border-bottom:1px solid rgba(201,169,106,.25);
+  position:relative;
+}
+.cast-visual img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  filter:saturate(.92);
+  transition:transform .6s ease;
+}
+.cast-card:hover .cast-visual img{ transform:scale(1.05); }
+.cast-card h3{ font-size:1.05rem; color:var(--gold-light); letter-spacing:.18em; margin:20px 10px 2px; }
+.cast-card .catch{ color:var(--gray); font-size:.76rem; letter-spacing:.08em; margin:6px 12px 0; line-height:1.8; min-height:1.8em; }
+.cast-card p{ color:var(--gray); font-size:.78rem; margin:12px 18px 0; line-height:1.9; }
+
+/* contact */
+#contact{ background:var(--bg2); }
+.form-control,.form-select{
+  background:#101010; border:1px solid rgba(201,169,106,.35); color:var(--txt);
+  border-radius:0; padding:.8rem 1rem; font-size:.9rem;
+}
+.form-control:focus,.form-select:focus{
+  background:#101010; color:var(--txt);
+  border-color:var(--gold); box-shadow:0 0 0 .15rem rgba(201,169,106,.2);
+}
+.form-control::placeholder{ color:#666; }
+.form-label{ font-size:.8rem; letter-spacing:.2em; color:var(--gold-light); }
+.btn-gold{
+  background:transparent; color:var(--gold); border:1px solid var(--gold);
+  border-radius:0; letter-spacing:.35em; text-indent:.35em; padding:.9rem 2rem;
+  transition:all .4s;
+}
+.btn-gold:hover{ background:var(--gold); color:#111; }
+.sns-btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:52px; height:52px; border:1px solid rgba(201,169,106,.5); border-radius:50%;
+  color:var(--gold); margin:0 10px; text-decoration:none; font-size:1.2rem;
+  transition:all .4s;
+}
+.sns-btn:hover{ background:var(--gold); color:#111; }
+.info-line{ color:var(--gray); font-size:.85rem; line-height:2.4; }
+.info-line b{ color:var(--gold-light); font-weight:400; letter-spacing:.2em; }
+
+footer{ padding:40px 0; text-align:center; color:#666; font-size:.7rem; letter-spacing:.3em; border-top:1px solid rgba(201,169,106,.2); }
+</style>
+</head>
+<body class="intro">
+
+<!-- Brand logo template (image if logo.png exists, SVG recreation otherwise) -->
+<template id="logoTpl">
+  <div class="brand-logo">
+    <img src="logo.png" alt="Cafe &amp; Bar COLZA" onerror="this.remove()">
+    <svg viewBox="0 0 400 520" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#f2ece0" stroke-width="2.2" stroke-linecap="round">
+      <defs>
+        <g id="petal">
+          <path d="M200 8 C 214 30 238 44 238 70 C 238 92 220 104 200 118 C 180 104 162 92 162 70 C 162 44 186 30 200 8 Z"/>
+          <path d="M200 36 C 207 48 218 54 218 68 C 218 80 209 87 200 95 C 191 87 182 80 182 68 C 182 54 193 48 200 36 Z" stroke-width="1.6"/>
+        </g>
+        <g id="curl">
+          <path d="M268 60 C 296 48 322 60 326 86 C 329 106 314 120 298 117 C 286 115 280 102 286 93 C 291 86 301 87 304 95" stroke-width="1.8"/>
+          <path d="M252 84 C 268 76 284 82 287 96" stroke-width="1.4"/>
+        </g>
+      </defs>
+      <!-- circle + monogram -->
+      <circle cx="200" cy="200" r="86"/>
+      <circle cx="200" cy="200" r="79" stroke-width="1.2"/>
+      <text x="206" y="238" font-family="'Cormorant Garamond',serif" font-style="italic" font-size="120" fill="#f2ece0" stroke="none" text-anchor="middle">C</text>
+      <!-- four petals -->
+      <use href="#petal" transform="translate(0,74)"/>
+      <use href="#petal" transform="rotate(90 200 200) translate(0,74)"/>
+      <use href="#petal" transform="rotate(180 200 200) translate(0,74)"/>
+      <use href="#petal" transform="rotate(270 200 200) translate(0,74)"/>
+      <!-- corner curls -->
+      <use href="#curl" transform="translate(0,38)"/>
+      <use href="#curl" transform="rotate(90 200 200) translate(0,38)"/>
+      <use href="#curl" transform="rotate(180 200 200) translate(0,38)"/>
+      <use href="#curl" transform="rotate(270 200 200) translate(0,38)"/>
+      <!-- wordmark -->
+      <text x="200" y="448" font-family="'Cormorant Garamond',serif" font-size="26" letter-spacing="6" fill="#f2ece0" stroke="none" text-anchor="middle">Cafe &amp; Bar</text>
+      <text x="200" y="500" font-family="'Cormorant Garamond',serif" font-size="52" letter-spacing="14" fill="#f2ece0" stroke="none" text-anchor="middle">COLZA</text>
+    </svg>
+  </div>
+</template>
+
+<!-- Nav -->
+<nav class="top-nav fixed-top reveal">
+  <ul>
+    <li><a class="nav-link" href="#concept">CONCEPT</a></li>
+    <li><a class="nav-link" href="#system">SYSTEM</a></li>
+    <li><a class="nav-link" href="#cast">CAST</a></li>
+    <li><a class="nav-link" href="#recruit">RECRUIT</a></li>
+    <li><a class="nav-link" href="#contact">CONTACT</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<header id="hero">
+  <div class="hero-visual reveal">
+    <div class="lamp" style="left:25%"></div>
+    <div class="lamp" style="left:50%"></div>
+    <div class="lamp" style="left:75%"></div>
+    <div class="counter-line"></div>
+    <div class="glass" style="left:22%"></div>
+    <div class="glass" style="left:48%; height:48px; width:22px;"></div>
+    <div class="glass" style="left:73%; height:66px;"></div>
+  </div>
+  <div class="hero-inner">
+    <div data-logo></div>
+    <p class="lead-txt reveal">
+      静かな夜に、ひとつの灯り。<br>
+      カウンター越しに紡がれる、大人のための特別な時間。
+    </p>
+  </div>
+  <div class="scroll-cue reveal">SCROLL<span></span></div>
+</header>
+
+<!-- Concept -->
+<section id="concept">
+  <div class="container fade">
+    <div class="sec-title">
+      <h2>CONCEPT</h2><small>コンセプト</small>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-8 text-center">
+        <p>
+          COLZAは、カウンター席のみの小さなカフェ＆バー。<br>
+          ほの暗い灯りとグラスの煌めきに包まれて、<br class="d-none d-md-block">
+          一杯のお酒と何気ない会話をお愉しみいただけます。<br>
+          おひとり様でも、仕事帰りでも。<br>
+          扉を開ければ、そこはあなただけの止まり木です。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- System -->
+<section id="system">
+  <div class="container fade">
+    <div class="sec-title">
+      <h2>SYSTEM</h2><small>料金システム</small>
+    </div>
+    <div class="row g-4 mb-5">
+      <div class="col-md-4">
+        <div class="sys-card">
+          <div class="en">SET CHARGE</div>
+          <h3>セット料金</h3>
+          <div class="price">¥3,000<small> / 60分</small></div>
+          <p>カウンター席のみ・全席チャージ込<br>延長 30分 ¥1,500</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="sys-card">
+          <div class="en">DRINK</div>
+          <h3>キャストドリンク</h3>
+          <div class="price">¥1,000<small> 〜</small></div>
+          <p>お好きなキャストに一杯を<br>シャンパン・ボトルもご用意</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="sys-card">
+          <div class="en">VIP / EVENT</div>
+          <h3>貸切・イベント</h3>
+          <div class="price">ASK<small></small></div>
+          <p>貸切営業・イベント開催など<br>お気軽にご相談ください</p>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <table class="table sys-table">
+          <tbody>
+            <tr><td>ハウスボトル（焼酎・ウイスキー）</td><td>¥6,000〜</td></tr>
+            <tr><td>シャンパン</td><td>¥15,000〜</td></tr>
+            <tr><td>フード各種</td><td>¥800〜</td></tr>
+            <tr><td>カラオケ 1曲</td><td>¥200</td></tr>
+          </tbody>
+        </table>
+        <p class="note text-center mb-0">※ 表示価格は税抜です。別途サービス料10%を頂戴いたします。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Cast -->
+<section id="cast">
+  <div class="container fade">
+    <div class="sec-title">
+      <h2>CAST</h2><small>キャスト紹介</small>
+    </div>
+    <div class="row g-4">
+      <div class="col-6 col-md-3">
+        <div class="cast-card">
+          <div class="cast-visual"><img src="https://cfs.pokepara.jp/Pokepara/Images/gal/476530/photo/profile/CmfJd4M55eXnKOv3n1K_l.jpg" alt="みさ" loading="lazy"></div>
+          <h3>みさ</h3><div class="catch">ﾏﾝｽｲﾁｭｱﾝ</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="cast-card">
+          <div class="cast-visual"><img src="https://cfs.pokepara.jp/Pokepara/Images/gal/561857/photo/profile/Cp99IhB8BN8jtBvV4Kk_l.jpg" alt="にこちん" loading="lazy"></div>
+          <h3>にこちん</h3><div class="catch">大学5年生夜も5年生</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="cast-card">
+          <div class="cast-visual"><img src="https://cfs.pokepara.jp/Pokepara/Images/gal/445088/photo/profile/rQuQAZDAYkAr8ytezR7_l.jpg" alt="るな" loading="lazy"></div>
+          <h3>るな</h3><div class="catch">引きこもりゲーム廃人</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="cast-card">
+          <div class="cast-visual"><img src="https://cfs.pokepara.jp/Pokepara/Images/gal/795010/photo/profile/wwRhOS4V6idqeD8aUNX_l.jpg" alt="まゆ" loading="lazy"></div>
+          <h3>まゆ</h3><div class="catch">ちょっと背高めです</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="cast-card">
+          <div class="cast-visual"><img src="https://cfs.pokepara.jp/Pokepara/Images/gal/763961/photo/profile/Wixq7gUGsicpuRWZsXN_l.jpg" alt="るい" loading="lazy"></div>
+          <h3>るい</h3><div class="catch">酒雑魚</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="cast-card">
+          <div class="cast-visual"><img src="https://cfs.pokepara.jp/Pokepara/Images/gal/425096/photo/profile/NvJ0hZiuBWEfkAvvoPH_l.jpg" alt="1番偉い人" loading="lazy"></div>
+          <h3>1番偉い人(さいか)</h3><div class="catch">1番偉いのに雑魚扱い</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="cast-card">
+          <div class="cast-visual"><img src="https://cfs.pokepara.jp/Pokepara/Images/gal/766486/photo/profile/KGYMwmJYvrJylu0kex3_l.jpg" alt="りあ" loading="lazy"></div>
+          <h3>りあ</h3><div class="catch">colzaのみんな優しくて大好き！</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="cast-card">
+          <div class="cast-visual"><img src="https://cfs.pokepara.jp/Pokepara/Images/gal/809310/photo/profile/sP0k4PjLKHvJzl2i7Bz_l.jpg" alt="きな" loading="lazy"></div>
+          <h3>きな</h3><div class="catch"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Recruit -->
+<section id="recruit">
+  <div class="container fade">
+    <div class="sec-title">
+      <h2>RECRUIT</h2><small>キャスト・スタッフ募集</small>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-8 text-center">
+        <p style="line-height:2.6; color:#d6d6d6; font-size:.95rem;">
+          COLZAでは一緒に働く仲間を募集しています。<br>
+          未経験の方も大歓迎。まずはお気軽にお問い合わせください。
+        </p>
+        <a href="#contact" class="btn btn-gold mt-4">応募・お問い合わせ</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="container fade">
+    <div class="sec-title">
+      <h2>CONTACT</h2><small>お問い合わせ・ご予約</small>
+    </div>
+    <div class="row justify-content-center g-5">
+      <div class="col-md-6">
+        <form id="reserveForm" novalidate>
+          <div class="mb-3">
+            <label class="form-label">お名前</label>
+            <input type="text" class="form-control" placeholder="山田 太郎" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">ご連絡先（電話 / メール）</label>
+            <input type="text" class="form-control" placeholder="090-0000-0000" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">ご希望日時</label>
+            <input type="datetime-local" class="form-control">
+          </div>
+          <div class="mb-4">
+            <label class="form-label">メッセージ</label>
+            <textarea class="form-control" rows="4" placeholder="ご予約・貸切のご相談など"></textarea>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-gold">送信する</button>
+          </div>
+          <p id="formMsg" class="text-center mt-3 mb-0" style="color:var(--gold); font-size:.85rem; display:none;">
+            送信しました。ご連絡をお待ちください。
+          </p>
+        </form>
+      </div>
+      <div class="col-md-5 text-center">
+        <p class="info-line">
+          <b>OPEN</b><br>20:00 — LAST<br><br>
+          <b>ADDRESS</b><br>東京都◯◯区◯◯ 1-2-3 ◯◯ビル 2F<br><br>
+          <b>TEL</b><br>03-0000-0000
+        </p>
+        <div class="mt-4">
+          <a class="sns-btn" href="#" aria-label="Instagram">◎</a>
+          <a class="sns-btn" href="#" aria-label="X">𝕏</a>
+          <a class="sns-btn" href="#" aria-label="LINE">L</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Cafe &amp; Bar COLZA</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Inject brand logo (logo.png if present, SVG fallback otherwise)
+const logoTpl = document.getElementById('logoTpl');
+document.querySelectorAll('[data-logo]').forEach(slot => {
+  const node = logoTpl.content.cloneNode(true);
+  node.querySelector('img').addEventListener('load', () => {
+    const s = slot.querySelector('svg');
+    if (s) s.remove();
+  });
+  slot.appendChild(node);
+});
+
+// Sections and footer also take part in the page fade-in
+document.querySelectorAll('section, footer').forEach(el => el.classList.add('reveal'));
+
+// Logo floats in first (3.5s), stays in place, then the page fades in around it
+window.addEventListener('load', () => {
+  setTimeout(() => document.body.classList.remove('intro'), 4200);
+});
+
+// Scroll fade-in
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); } });
+}, { threshold: 0.15 });
+document.querySelectorAll('.fade').forEach(el => io.observe(el));
+
+// Dummy form submit
+document.getElementById('reserveForm').addEventListener('submit', e => {
+  e.preventDefault();
+  document.getElementById('formMsg').style.display = 'block';
+  e.target.reset();
+});
+</script>
+</body>
+</html>
