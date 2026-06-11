@@ -181,6 +181,28 @@ section{ padding:96px 0; }
 .cast-card .catch{ color:var(--gray); font-size:.76rem; letter-spacing:.08em; margin:6px 12px 0; line-height:1.8; min-height:1.8em; }
 .cast-card p{ color:var(--gray); font-size:.78rem; margin:12px 18px 0; line-height:1.9; }
 
+/* recruit horizontal bars */
+.recruit-bar{
+  display:flex; align-items:center; text-align:left;
+  background:#161616; border:1px solid rgba(201,169,106,.3);
+  padding:22px 26px; margin-bottom:16px; gap:26px;
+  transition:border-color .4s;
+}
+.recruit-bar:hover{ border-color:var(--gold); }
+.rb-head{ flex:0 0 130px; border-right:1px solid rgba(201,169,106,.25); padding-right:20px; }
+.rb-head .en{ font-family:'Cormorant Garamond',serif; color:var(--gold); letter-spacing:.22em; font-size:.74rem; }
+.rb-head h3{ font-size:1.05rem; color:var(--gold-light); letter-spacing:.15em; margin:6px 0 0; }
+.rb-body{ flex:1; color:var(--gray); font-size:.84rem; line-height:2; }
+.rb-price{
+  display:inline-block; margin-right:14px;
+  font-family:'Cormorant Garamond','Noto Serif JP',serif;
+  font-size:1.4rem; color:var(--txt);
+}
+@media (max-width:576px){
+  .recruit-bar{ flex-direction:column; align-items:flex-start; gap:12px; padding:18px 18px; }
+  .rb-head{ flex:none; border-right:none; border-bottom:1px solid rgba(201,169,106,.25); padding:0 0 10px; width:100%; }
+}
+
 /* contact */
 #contact{ background:var(--bg2); }
 .form-control,.form-select{
@@ -423,21 +445,19 @@ footer{ padding:40px 0; text-align:center; color:#666; font-size:.7rem; letter-s
           COLZAでは一緒に働く仲間を募集しています。<br>
           「みんな仲良く」を大切にする、チームワークの良いお店です。未経験の方も大歓迎。
         </p>
-        <div class="row g-4 mt-2 mb-2 text-start justify-content-center">
-          <div class="col-md-5">
-            <div class="sys-card">
-              <div class="en">SALARY</div>
-              <h3>時給</h3>
-              <div class="price">¥1,500<small> 〜</small></div>
-              <p>平日 1,500円 / 金曜 1,600円 / 土曜 1,700円<br>頑張りに応じた時給アップ・各種バックあり</p>
+        <div class="mt-4 mb-2">
+          <div class="recruit-bar">
+            <div class="rb-head"><div class="en">SALARY</div><h3>時給</h3></div>
+            <div class="rb-body">
+              <span class="rb-price">¥1,500〜</span>
+              平日 1,500円 / 金曜 1,600円 / 土曜 1,700円<br>頑張りに応じた時給アップ・各種バックあり
             </div>
           </div>
-          <div class="col-md-5">
-            <div class="sys-card">
-              <div class="en">BENEFITS</div>
-              <h3>待遇・特典</h3>
-              <div class="price">日払いOK<small></small></div>
-              <p>各種ボーナス・ブログ手当・送迎あり<br>ネイル割引（オーナーはプロネイリスト！）</p>
+          <div class="recruit-bar">
+            <div class="rb-head"><div class="en">BENEFITS</div><h3>待遇・特典</h3></div>
+            <div class="rb-body">
+              <span class="rb-price">日払いOK</span>
+              各種ボーナス・ブログ手当・送迎あり<br>ネイル割引（オーナーはプロネイリスト！）
             </div>
           </div>
         </div>
