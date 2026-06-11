@@ -154,7 +154,15 @@ section{ padding:96px 0; }
   background:transparent; color:#ddd; border-color:rgba(201,169,106,.25);
   padding:.9rem 1rem; font-size:.88rem;
 }
-.sys-table td:last-child{ text-align:right; color:var(--gold-light); font-family:'Cormorant Garamond',serif; font-size:1rem; }
+.sys-table td:first-child{ white-space:nowrap; width:1%; padding-right:2.5rem; }
+.sys-table .nw{ white-space:nowrap; }
+.sys-table td:last-child{ text-align:right; color:var(--gold-light); font-family:'Cormorant Garamond','Noto Serif JP',serif; font-size:1rem; }
+@media (max-width:576px){
+  .sys-table tr{ display:block; padding:.4rem 0; border-bottom:1px solid rgba(201,169,106,.25); }
+  .sys-table td{ display:block; border:none; padding:.3rem .2rem; }
+  .sys-table td:first-child{ white-space:normal; width:auto; padding-right:0; color:var(--gold); font-size:.78rem; letter-spacing:.15em; }
+  .sys-table td:last-child{ text-align:left; }
+}
 .note{ color:var(--gray); font-size:.74rem; letter-spacing:.1em; }
 
 /* cast (no faces — silhouette-free monogram cards) */
@@ -359,11 +367,11 @@ footer{ padding:40px 0; text-align:center; color:#666; font-size:.7rem; letter-s
       </div>
     </div>
     <div class="row justify-content-center">
-      <div class="col-md-8">
+      <div class="col-md-12 col-lg-10">
         <table class="table sys-table">
           <tbody>
-            <tr><td>飲み放題（セット料金に含む）</td><td>ビール / ハイボール / 焼酎（鏡月） / ウイスキー ほか</td></tr>
-            <tr><td>ソフトドリンク</td><td>緑茶 / ウーロン茶 / オレンジ / アップル / コーラ / 水</td></tr>
+            <tr><td>飲み放題（セット料金に含む）</td><td><span class="nw">ビール / ハイボール /</span> <span class="nw">焼酎（鏡月） / ウイスキー ほか</span></td></tr>
+            <tr><td>ソフトドリンク</td><td><span class="nw">緑茶 / ウーロン茶 / オレンジ /</span> <span class="nw">アップル / コーラ / 水</span></td></tr>
             <tr><td>営業時間</td><td>20:00 〜 LAST</td></tr>
             <tr><td>定休日</td><td>毎週木曜日</td></tr>
           </tbody>
